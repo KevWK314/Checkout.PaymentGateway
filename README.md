@@ -1,3 +1,5 @@
+[![Payment Gateway Build and Test](https://github.com/KevWK314/Checkout.PaymentGateway/actions/workflows/buildAndTest.yml/badge.svg)](https://github.com/KevWK314/Checkout.PaymentGateway/actions/workflows/buildAndTest.yml)
+
 # Checkout.com Payment Gateway
 
 This implementation of a Payment Gateway has been written by Kevin Kavanagh as part of the interview process with Checkout.com as per the received spec. 
