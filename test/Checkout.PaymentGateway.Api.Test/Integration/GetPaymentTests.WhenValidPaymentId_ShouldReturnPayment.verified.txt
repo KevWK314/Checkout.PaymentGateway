@@ -1,0 +1,16 @@
+﻿{
+  Payment: {
+    Id: Guid_1,
+    MerchantId: Guid_2,
+    Success: true,
+    Amount: 24.5,
+    Currency: GBP,
+    From: {
+      CardHolderName: A Individual,
+      CardNumber: 1234123412341234,
+      Cvv: 123,
+      ExpiryMonth: 12,
+      ExpiryYear: 22
+    }
+  }
+}
