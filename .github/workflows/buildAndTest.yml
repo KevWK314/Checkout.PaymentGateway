@@ -1,4 +1,4 @@
-name: .NET
+name: Payment Gateway Build and Test
 
 on:
   push:
