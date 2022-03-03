@@ -1,8 +1,9 @@
-﻿namespace Checkout.PaymentGateway.Api.Contract;
-
-public record PaymentRequest
+﻿namespace Checkout.PaymentGateway.Api.Contract
 {
-    public decimal Amount { get; init; }
-    public string Currency { get; init; }
-    public CardDetails From { get; init; }
+    public class PaymentRequest
+    {
+        public decimal Amount { get; set; }
+        public string Currency { get; set; }
+        public CardDetails From { get; set; }
+    }
 }

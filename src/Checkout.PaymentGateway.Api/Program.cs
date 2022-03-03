@@ -1,17 +1,20 @@
-using Checkout.PaymentGateway.Api.Middleware;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Checkout.PaymentGateway.Api
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-Bootstrapper.Bootstrap(builder.Services);
-
-builder.Services.AddControllers();
-builder.Services.AddHealthChecks();
-
-var app = builder.Build();
-
-app.UseHttpsRedirection();
-app.UseMiddleware<ErrorHandlerMiddleware>();
-app.MapControllers();
-app.UseHealthChecks("/healthcheck");
-
-app.Run();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
+}

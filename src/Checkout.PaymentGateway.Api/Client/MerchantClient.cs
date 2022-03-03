@@ -1,23 +1,27 @@
-﻿namespace Checkout.PaymentGateway.Api.Client;
+﻿using Checkout.PaymentGateway.Api.Model;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public interface IMerchantClient
+namespace Checkout.PaymentGateway.Api.Client
 {
-    Task<Merchant> GetMerchant(string secretKey);
-}
-
-/// <summary>
-/// This class is used to request Merchant details from a Merchant Service.
-/// I've mocked this class using preconfigured merchants.
-/// </summary>
-public class MerchantClient : IMerchantClient
-{
-    private static readonly Merchant NotFoundMerchant = new Merchant
+    public interface IMerchantClient
     {
-        Id = "NotFound",
-        IsActive = false
-    };
+        Task<Merchant> GetMerchant(string secretKey);
+    }
 
-    private Dictionary<string, Merchant> _merchants = new Dictionary<string, Merchant>
+    /// <summary>
+    /// This class is used to request Merchant details from a Merchant Service.
+    /// I've mocked this class using preconfigured merchants.
+    /// </summary>
+    public class MerchantClient : IMerchantClient
+    {
+        private static readonly Merchant NotFoundMerchant = new Merchant
+        {
+            Id = "NotFound",
+            IsActive = false
+        };
+
+        private Dictionary<string, Merchant> _merchants = new Dictionary<string, Merchant>
     {
         { "merchantkey1", new Merchant { Id = "09D3E1DD-BCC4-4457-A987-38B837B29D22", Name = "Happy Toy Shop", BankAccount = "53554743", IsActive = true } },
         { "merchantkey2", new Merchant { Id = "7495BDF4-6268-4BD9-AAFE-6DB1A313D25A", Name = "We Make Scarves", BankAccount = "93847652", IsActive = true } },
@@ -25,13 +29,14 @@ public class MerchantClient : IMerchantClient
         { "merchantkey4", new Merchant { Id = "75EC028C-0064-4165-86A8-C791635D209F", Name = "The Grocer", BankAccount = "Invalid", IsActive = true } },
     };
 
-    public Task<Merchant> GetMerchant(string secretKey)
-    {
-        if (_merchants.TryGetValue(secretKey, out var merchant))
+        public Task<Merchant> GetMerchant(string secretKey)
         {
-            return Task.FromResult(merchant);
-        }
+            if (_merchants.TryGetValue(secretKey, out var merchant))
+            {
+                return Task.FromResult(merchant);
+            }
 
-        return Task.FromResult(NotFoundMerchant);
+            return Task.FromResult(NotFoundMerchant);
+        }
     }
 }

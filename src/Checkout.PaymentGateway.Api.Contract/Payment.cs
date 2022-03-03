@@ -1,11 +1,12 @@
-﻿namespace Checkout.PaymentGateway.Api.Contract;
-
-public record Payment
+﻿namespace Checkout.PaymentGateway.Api.Contract
 {
-    public string Id { get; init; }
-    public string MerchantId { get; init; }
-    public bool Success { get; init; }
-    public decimal Amount { get; init; }
-    public string Currency { get; init; }
-    public CardDetails From { get; init; }
+    public class Payment
+    {
+        public string Id { get; set; }
+        public string MerchantId { get; set; }
+        public bool Success { get; set; }
+        public decimal Amount { get; set; }
+        public string Currency { get; set; }
+        public CardDetails From { get; set; }
+    }
 }

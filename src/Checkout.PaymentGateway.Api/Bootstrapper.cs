@@ -1,21 +1,28 @@
-﻿namespace Checkout.PaymentGateway.Api;
+﻿using Checkout.PaymentGateway.Api.Client;
+using Checkout.PaymentGateway.Api.Handler;
+using Checkout.PaymentGateway.Api.Mapper;
+using Checkout.PaymentGateway.Api.Repository;
+using Microsoft.Extensions.DependencyInjection;
 
-public static class Bootstrapper
+namespace Checkout.PaymentGateway.Api
 {
-    /// <summary>
-    /// Register all dependencies in this Bootstrapper. I quite like simply
-    /// using IServiceCollection, especially when the DI requirements are simple.
-    /// </summary>
-    public static void Bootstrap(IServiceCollection services)
+    public static class Bootstrapper
     {
-        services.AddSingleton<ICreatePaymentHandler, CreatePaymentHandler>();
-        services.AddSingleton<IGetPaymentHandler, GetPaymentHandler>();
+        /// <summary>
+        /// Register all dependencies in this Bootstrapper. I quite like simply
+        /// using IServiceCollection, especially when the DI requirements are simple.
+        /// </summary>
+        public static void Bootstrap(IServiceCollection services)
+        {
+            services.AddSingleton<ICreatePaymentHandler, CreatePaymentHandler>();
+            services.AddSingleton<IGetPaymentHandler, GetPaymentHandler>();
 
-        services.AddSingleton<IBankPaymentMapper, BankPaymentMapper>();
+            services.AddSingleton<IBankPaymentMapper, BankPaymentMapper>();
 
-        services.AddSingleton<IMerchantClient, MerchantClient>();
-        services.AddSingleton<IBankClient, BankClient>();
-        
-        services.AddSingleton<IPaymentRepository, PaymentRepository>();
+            services.AddSingleton<IMerchantClient, MerchantClient>();
+            services.AddSingleton<IBankClient, BankClient>();
+
+            services.AddSingleton<IPaymentRepository, PaymentRepository>();
+        }
     }
 }

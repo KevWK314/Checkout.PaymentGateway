@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Checkout.PaymentGateway.Api.Contract;
+using Checkout.PaymentGateway.Api.Handler;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Checkout.PaymentGateway.Api.Controllers
 {

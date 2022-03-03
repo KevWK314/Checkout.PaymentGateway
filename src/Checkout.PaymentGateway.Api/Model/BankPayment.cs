@@ -1,10 +1,13 @@
-﻿namespace Checkout.PaymentGateway.Api.Model;
+﻿using Checkout.PaymentGateway.Api.Contract;
 
-public record BankPayment
+namespace Checkout.PaymentGateway.Api.Model
 {
-    public bool Success { get; init; }
-    public decimal Amount { get; init; }
-    public string Currency { get; init; }
-    public string BankAccount { get; init; }
-    public CardDetails From { get; init; }
+    public class BankPayment
+    {
+        public bool Success { get; set; }
+        public decimal Amount { get; set; }
+        public string Currency { get; set; }
+        public string BankAccount { get; set; }
+        public CardDetails From { get; set; }
+    }
 }

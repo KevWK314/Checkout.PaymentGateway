@@ -1,10 +1,11 @@
-﻿namespace Checkout.PaymentGateway.Api.Contract;
-
-public record CardDetails
+﻿namespace Checkout.PaymentGateway.Api.Contract
 {
-    public string CardHolderName { get; init; }
-    public string CardNumber { get; init; }
-    public string Cvv { get; init; }
-    public int ExpiryMonth { get; init; }
-    public int ExpiryYear { get; init; }
+    public class CardDetails
+    {
+        public string CardHolderName { get; set; }
+        public string CardNumber { get; set; }
+        public string Cvv { get; set; }
+        public int ExpiryMonth { get; set; }
+        public int ExpiryYear { get; set; }
+    }
 }

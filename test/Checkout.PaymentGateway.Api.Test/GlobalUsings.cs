@@ -1,9 +1,0 @@
-﻿global using Xunit;
-global using System.Net.Http.Json;
-global using Checkout.PaymentGateway.Api.Contract;
-global using FluentAssertions;
-global using Checkout.PaymentGateway.Api.Client;
-global using Checkout.PaymentGateway.Api.Handler;
-global using Checkout.PaymentGateway.Api.Repository;
-global using NSubstitute;
-global using Checkout.PaymentGateway.Api.Model;

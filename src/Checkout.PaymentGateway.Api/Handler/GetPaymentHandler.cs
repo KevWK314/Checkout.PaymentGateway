@@ -1,52 +1,60 @@
-﻿namespace Checkout.PaymentGateway.Api.Handler;
+﻿using Checkout.PaymentGateway.Api.Client;
+using Checkout.PaymentGateway.Api.Contract;
+using Checkout.PaymentGateway.Api.Repository;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
-public interface IGetPaymentHandler
+namespace Checkout.PaymentGateway.Api.Handler
 {
-    Task<PaymentResponse> Process(string merchantSecret, string paymentId);
-}
-
-/// <summary>
-/// Get Payment based on a request payment Id. Be sure we don't return
-/// payments for the incorrect merchant.
-/// </summary>
-public class GetPaymentHandler : IGetPaymentHandler
-{
-    private readonly ILogger<GetPaymentHandler> _logger;
-    private readonly IMerchantClient _merchantClient;
-    private readonly IPaymentRepository _paymentRepository;
-
-    public GetPaymentHandler(
-        ILogger<GetPaymentHandler> logger,
-        IMerchantClient merchantClient,
-        IPaymentRepository paymentRepository)
+    public interface IGetPaymentHandler
     {
-        _logger = logger;
-        _merchantClient = merchantClient;
-        _paymentRepository = paymentRepository;
+        Task<PaymentResponse> Process(string merchantSecret, string paymentId);
     }
 
-    public async Task<PaymentResponse> Process(string merchantSecret, string paymentId)
+    /// <summary>
+    /// Get Payment based on a request payment Id. Be sure we don't return
+    /// payments for the incorrect merchant.
+    /// </summary>
+    public class GetPaymentHandler : IGetPaymentHandler
     {
-        try
+        private readonly ILogger<GetPaymentHandler> _logger;
+        private readonly IMerchantClient _merchantClient;
+        private readonly IPaymentRepository _paymentRepository;
+
+        public GetPaymentHandler(
+            ILogger<GetPaymentHandler> logger,
+            IMerchantClient merchantClient,
+            IPaymentRepository paymentRepository)
         {
-            var merchant = await _merchantClient.GetMerchant(merchantSecret);
-            if (merchant == null || merchant.IsActive == false)
-                return new PaymentResponse { Error = "Invalid merchant." };
-
-            var payment = await _paymentRepository.GetPayment(paymentId);
-
-            // If payment not found or pament belongs to another merchant, return error
-            if (payment == null || payment.MerchantId != merchant.Id)
-            {
-                return new PaymentResponse { Error = "Payment was not found." };
-            }
-
-            return new PaymentResponse { Payment = payment };
+            _logger = logger;
+            _merchantClient = merchantClient;
+            _paymentRepository = paymentRepository;
         }
-        catch (Exception ex)
+
+        public async Task<PaymentResponse> Process(string merchantSecret, string paymentId)
         {
-            _logger.LogError(ex, "Failed to get payment");
-            return new PaymentResponse { Error = "Failed to get the payment. Please try again later." };
+            try
+            {
+                var merchant = await _merchantClient.GetMerchant(merchantSecret);
+                if (merchant == null || merchant.IsActive == false)
+                    return new PaymentResponse { Error = "Invalid merchant." };
+
+                var payment = await _paymentRepository.GetPayment(paymentId);
+
+                // If payment not found or pament belongs to another merchant, return error
+                if (payment == null || payment.MerchantId != merchant.Id)
+                {
+                    return new PaymentResponse { Error = "Payment was not found." };
+                }
+
+                return new PaymentResponse { Payment = payment };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to get payment");
+                return new PaymentResponse { Error = "Failed to get the payment. Please try again later." };
+            }
         }
     }
 }

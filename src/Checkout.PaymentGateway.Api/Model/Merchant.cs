@@ -1,9 +1,10 @@
-﻿namespace Checkout.PaymentGateway.Api.Model;
-
-public record Merchant
+﻿namespace Checkout.PaymentGateway.Api.Model
 {
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public string BankAccount { get; init; }
-    public bool IsActive { get; init; }
+    public class Merchant
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string BankAccount { get; set; }
+        public bool IsActive { get; set; }
+    }
 }

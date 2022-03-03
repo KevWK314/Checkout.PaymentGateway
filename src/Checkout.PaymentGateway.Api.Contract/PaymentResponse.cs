@@ -1,7 +1,8 @@
-﻿namespace Checkout.PaymentGateway.Api.Contract;
-
-public record PaymentResponse
+﻿namespace Checkout.PaymentGateway.Api.Contract
 {
-    public Payment Payment { get; init; }
-    public string Error { get; init; }
+    public class PaymentResponse
+    {
+        public Payment Payment { get; set; }
+        public string Error { get; set; }
+    }
 }
